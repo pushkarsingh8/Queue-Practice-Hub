@@ -1,124 +1,101 @@
-#Implement Using Queues:-
+#Impelement stack using queues:-
 
 class Node:
     def __init__(self,value):
         self.data = value
         self.next = None
         
-class stack:
-            
+        
+class queue:
     def __init__(self):
-        self.top = None
+        self.front = None
+        self.rear = None
         self.size = 0
         
     def is_empty(self):
-        return self.top == None
-    
-    def push(self,value):
-        new_node = Node(value)
+        return self.front == None    
         
-        new_node.next = self.top
-        self.top = new_node
+    
+    def enqueue(self,value):
+        new_node = Node(value)
+
+        if self.is_empty():
+            self.front = self.rear = new_node
+            
+        else:
+            self.rear.next = new_node
+            self.rear = new_node
         self.size += 1
         
         
-    def pop(self):
+        
+        
+    def dequeue(self):
         if self.is_empty():
+            print("Empty")
             return None
+        data = self.front.data
+          
+        self.front = self.front.next
         
-        value = self.top.data
-        self.top = self.top.next
+        if self.front == None:
+            self.rear = None
+            
         self.size -= 1
-        return value
+        return data
         
         
-        
-        
-        
-        
-class two_stack:
+class stackusingqueues:
     def __init__(self):
-        self.q1 = stack()
-        self.q2 = stack()
+        self.q1 = queue()
+        self.q2 = queue()
         
+        
+    def is_empty(self):
+        return self.q1.is_empty()
         
         
     def push(self,value):
+        self.q2.enqueue(value)
         
-        self.q2.push(value)
-        
-        
-        
-        
-        
-        #transfer all the elements q1 to q2
         while not self.q1.is_empty():
+            self.q2.enqueue(self.q1.dequeue())
+            
+            
+            
+        self.q1,self.q2 = self.q2,self.q1
+            
+            
         
-            
-            
-            self.q2.push(self.q1.pop())
-            
-        #swap q1 to q2  
-        self.q1, self.q2 =self.q2, self.q1
         
         
     def pop(self):
         
-        if self.q1.is_empty():
-            print("stack is Empty")
+        if self.is_empty():
             return None
-        
-        return self.q1.pop()
-    
-        
-        
-    
-        
-                
+        return self.q1.dequeue()
         
         
     def traverse(self):
-        if self.q1.is_empty():
-            print("Stack is Empty")
+        
+        
+        if self.is_empty():
+            print("stack is empty")
             return None
         
-        curr = self.q1.top
-        res = []
         
+        curr = self.q1.front
+        res = []
         while curr!=None:
             res.append(curr.data)
-            curr =  curr.next
-        
+            curr = curr.next 
+            
         print(res)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-                
-s = two_stack()
 
-s.push(5)
-s.push(8)
-s.pop()
-s.push(8)
-s.push(8)
-s.traverse()
-
-
-            
-             
-        
-        
-            
+q = stackusingqueues()
+q.push(10)
+q.push(9)
+q.push(80)
+q.pop()
+q.traverse()
